@@ -34,8 +34,8 @@ void setup_values(){
 	xspeed = 0.5f;// speed of movement
 	yspeed = 0.5f;// speed of movement
 	random_cols(cols);
-}
 
+}
 //---------------------------------------------------------------------------------
 int main(void) {
 //---------------------------------------------------------------------------------
@@ -91,6 +91,10 @@ int main(void) {
 			glBoxFilledGradient(x,y,x2,y2, cols[0],cols[1],cols[2],cols[3]); // draw our box wit gradient
 		else
 			glBoxFilled(x,y,x2,y2,cols[0]); // draw our box solid fill
+
+
+		glLine(x, y, x2, y2, cols[1]);
+		glLine(x2, y2, x, y, cols[1]);
 
 		if (x2 >= 256 || x <= 0) {
 			xspeed *= -1; 
