@@ -16,6 +16,11 @@ int main(void) {
 	consoleDemoInit();
 	glScreen2D();
 	bool gradient = true;
+	soundEnable();
+	int vol = 0;
+
+	int sound_id = soundPlayNoise(7000, vol, 64);
+
 	std::vector<Box> boxes;
 	Box _box;
 	boxes.push_back(_box);
@@ -55,7 +60,10 @@ int main(void) {
 
 		for (int i =0; i < boxes.size(); i++)
 		{
-			boxes[i].Update();
+			if (boxes[i].Update())
+			{
+				vol = 64;
+			}
 			boxes[i].Draw(gradient);
 		}
 		printf("\x1b[2;0Hbouncing dvd test - damien :)");
@@ -66,8 +74,13 @@ int main(void) {
 		printf("\x1b[8;0HSELECT to reset values");
 		printf("\x1b[9;0HSTART to switch colour mode");
 		printf("\x1b[10;0HY to create new box");
+
+		printf("\x1b[12;0H volume: %d        ", vol);
 		boxes[0].PrintDebugInfo();
 
+		soundSetVolume(sound_id, vol);
+		vol -= 4;
+		if (vol < 0) vol = 0;
 		glEnd2D();
 		glFlush(0);
 		swiWaitForVBlank();
