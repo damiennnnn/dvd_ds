@@ -50,9 +50,12 @@ int main(void) {
 		if (keys & KEY_DOWN){ // increase height when DOWN pressed
 			boxes[0].IncreaseSize(0,1);
 		}
-		if (keys & KEY_Y){ // reset values
+		if (keys & KEY_Y){ // add new box
 			Box _newBox;
 			boxes.push_back(_newBox);
+		}
+		if (keys & KEY_X){ // remove latest box
+			boxes.pop_back();
 		}
 		if (keys & KEY_START){
 			gradient = !gradient;
@@ -73,13 +76,13 @@ int main(void) {
 		printf("\x1b[7;0HUp + Down to adjust height");
 		printf("\x1b[8;0HSELECT to reset values");
 		printf("\x1b[9;0HSTART to switch colour mode");
-		printf("\x1b[10;0HY to create new box");
+		printf("\x1b[10;0HY to create new box, X to remove");
 
 		printf("\x1b[12;0H volume: %d        ", vol);
 		boxes[0].PrintDebugInfo();
 
 		soundSetVolume(sound_id, vol);
-		vol -= 4;
+		vol -= 8;
 		if (vol < 0) vol = 0;
 		glEnd2D();
 		glFlush(0);
